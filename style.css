@@ -1,0 +1,161 @@
+body {
+    background-color: rgb(22, 22, 22);
+}
+
+.container {
+    display: flex;
+    gap: 17px;
+
+}
+
+.songlist {
+    width: 27vw;
+    height: 44vw;
+    background-color: black;
+    color: white;
+    display: flex;
+    overflow-y: scroll;
+
+    border-radius: 10px;
+
+
+}
+
+.songlist ul {
+    list-style: none;
+    position: relative;
+    left: -19px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    width: 290px;
+    height: 410px;
+    flex-direction: column;
+}
+
+.songlist ul li {
+    background-color: black;
+    border: 2px solid white;
+    display: flex;
+    list-style-type: decimal;
+    gap: 31px;
+    padding: 11px;
+    border-radius: 7px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.playlists {
+
+    color: white;
+    width: 70vw;
+    background-color: black;
+
+    justify-content: center;
+    border-radius: 10px;
+}
+
+
+
+
+.invert {
+    filter: invert(1);
+}
+
+
+
+.cardcontainer {
+    display: flex;
+    height: 68vh;
+    width: auto;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px;
+    background-color: rgb(20, 21, 21);
+}
+
+.card img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.card {
+    width: 147px;
+    font-size: small;
+    background-color: rgb(24, 24, 24);
+    border-radius: 10px;
+    height: fit-content;
+    padding: 9px;
+
+
+    overflow: visible;
+}
+
+
+.playbar {
+    background-color: rgb(114, 189, 100);
+    color: white;
+    position: absolute;
+    bottom: 7px;
+    width: 70vw;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items:center;
+
+
+}
+
+.seekbar {
+    height: 1px;
+    width: 50vw;
+    border: 3px solid black;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 43px;
+    z-index: 1;
+    background-color: black;
+
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.circle {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: black;
+    position: relative;
+
+    transition: left 0.5s;
+
+}
+
+.songbuttons {
+
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    position: absolute;
+    bottom: 9px;
+}
+
+
+
+.songinfo {
+       display: flex;
+    position: absolute;
+    bottom: 9px;
+    left: 33px;
+}
+
+.songtime {
+   display: flex;
+    position: absolute;
+    bottom: 9px;
+    right: 33px;
+}
