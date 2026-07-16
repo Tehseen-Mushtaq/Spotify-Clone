@@ -39,8 +39,8 @@ async function main() {
 
 
     function playmusic(thatsong) {
-        console.log("/songs/" + thatsong)
-        currentsong.src = "/songs/" + thatsong
+        console.log("songs/" + thatsong)
+        currentsong.src = "songs/" + thatsong
 
         currentsong.play()
         play.src = "pause.svg"
