@@ -10,8 +10,8 @@ async function getsongs() {
 
 async function main() {
     let currentsong = new Audio();
-
-    let songs = await getsongs()
+ let songs;
+     songs = await getsongs()
 
     console.log(songs)
 
@@ -29,7 +29,7 @@ async function main() {
 
     Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
-            console.log(e.lastChild.textContent.trim())
+            console.log("Clicked song: " + e.lastChild.textContent.trim())
 
             playmusic(e.lastChild.textContent.trim())
 
@@ -70,6 +70,9 @@ async function main() {
 
 
     function convert(time) {
+        if(isNaN(time)){
+            return "00:00"
+        }
         const minutes = Math.floor(time / 60)
         const remainingseconds = Math.floor(time % 60)
         const formattedminutes = String(minutes).padStart(2, '0')
@@ -89,11 +92,20 @@ async function main() {
     //play previous
     previous.addEventListener("click", () => {
         console.log("previous clicked")
+        console.log(songs)
+        console.log(currentsong.src)
+        console.log(currentsong.src.split("/").slice(-1)[0])
+        let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0])
+        if(index > 0)
+        playmusic(songs[index -1])
+         console.log(songs , index)
     })
 
     //play next
     next.addEventListener("click", () => {
-        console.log("next clicked")
+         let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0])
+         if(index < songs.length - 1){ playmusic(songs[index +1])}
+       
     })
 
 }
