@@ -159,3 +159,10 @@ body {
     bottom: 9px;
     right: 33px;
 }
+.volume{
+        display: flex;
+    position: absolute;
+    right: 146px;
+    bottom: 10px;
+    cursor:pointer;
+}
