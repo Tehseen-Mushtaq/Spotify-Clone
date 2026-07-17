@@ -2,9 +2,9 @@ let currFolder;
 
 async function getsongs(folder) {
     currFolder = folder;
-    let a = await fetch(`songs/${folder}/songs.json`)
+    let a = await fetch(`songs/${currFolder}/songs.json`)
     let response = await a.json()
-    console.log(response)
+
 
 
     return response
@@ -15,33 +15,33 @@ async function main() {
     let songs;
     songs = await getsongs("playlist1")
 
-    console.log(songs)
+
 
 
     //show songs in sidebar
-    function rendersongs(){
-         const songul = document.querySelector(".songlist").getElementsByTagName("ul")[0]    // this is kahali daba
-    songul.innerHTML =""
-    for (const song of songs) {
-        songul.innerHTML = songul.innerHTML + `<li><img class ="invert" src="music-3-stroke-rounded.svg"> ${song}</li>`
-        console.log(song)
-    }
-    //attach event listner to each song to play song
-    Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
-        e.addEventListener("click", element => {
-            console.log("Clicked song: " + e.lastChild.textContent.trim())
+    function rendersongs() {
+        const songul = document.querySelector(".songlist").getElementsByTagName("ul")[0]    // this is kahali daba
+        songul.innerHTML = ""
+        for (const song of songs) {
+            songul.innerHTML = songul.innerHTML + `<li><img class ="invert" src="music-3-stroke-rounded.svg"> ${song}</li>`
 
-            playmusic(e.lastChild.textContent.trim())
+        }
+        //attach event listner to each song to play song
+        Array.from(document.querySelector(".songlist").getElementsByTagName("li")).forEach(e => {
+            e.addEventListener("click", element => {
+
+
+                playmusic(e.lastChild.textContent.trim())
+            })
         })
-    })
-}
-rendersongs()
+    }
+    rendersongs()
 
 
 
 
     function playmusic(thatsong) {
-        console.log("songs/" + thatsong)
+
         currentsong.src = "songs/" + `${currFolder}/` + thatsong
 
         currentsong.play()
@@ -96,14 +96,11 @@ rendersongs()
 
     //play previous
     previous.addEventListener("click", () => {
-        console.log("previous clicked")
-        console.log(songs)
-        console.log(currentsong.src)
-        console.log(currentsong.src.split("/").slice(-1)[0])
+
         let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0])
         if (index > 0)
             playmusic(songs[index - 1])
-        console.log(songs, index)
+
     })
 
     //play next
@@ -116,22 +113,61 @@ rendersongs()
     // volume
     document.querySelector(".volume").getElementsByTagName("input")[0].addEventListener("change", (e) => {
         currentsong.volume = parseInt(e.target.value) / 100
-        console.log(e)
+        if (currentsong.volume > 0) {
+           document.querySelector(".volume>img").src = document.querySelector(".volume>img").src.replace("mute.svg", "volume.svg")
+        }
     })
-   
 
-    //load songs based on playlists
-    Array.from(document.querySelectorAll(".card")).forEach(e => {
-        e.addEventListener("click", async item => {
+    //update album info based on info json in playlist and cover image
+    async function displayAlbum() {
+        let a = await fetch("playlist.json")
+        let responseplaylist = await a.json()
 
-            songs = await getsongs(`${item.currentTarget.dataset.folder}`)
-            rendersongs()
+        for (const eachlist of responseplaylist) {
+
+            let dfolder = eachlist  //not necessary lol
+            let b = await fetch(`songs/${dfolder}/info.json`)
+            let response = await b.json()
+
+
+            cardcontainer = document.querySelector(".cardcontainer")
+
+            cardcontainer.innerHTML = cardcontainer.innerHTML + `  <div data-folder= ${dfolder}   class="card">
+                <img src=songs/${dfolder}/cover.jpg alt="">
+                <h2>${response.title}</h2>
+                <p>${response.description}</p>
+            </div>`
+
+        }
+        //load songs based on playlists
+        Array.from(document.querySelectorAll(".card")).forEach(e => {
+            e.addEventListener("click", async item => {
+
+                songs = await getsongs(`${item.currentTarget.dataset.folder}`)
+                rendersongs()
+            })
         })
+    }
+    displayAlbum()
+
+
+
+
+
+
+    // mute 
+    document.querySelector(".volume>img").addEventListener("click", (e) => {
+        if (e.target.src.includes("volume.svg")) {
+            e.target.src = e.target.src.replace("volume.svg", "mute.svg")
+            document.querySelector(".volume").getElementsByTagName("input")[0].value = 0
+            currentsong.volume = 0
+        } else {
+            e.target.src = e.target.src.replace("mute.svg", "volume.svg")
+            document.querySelector(".volume").getElementsByTagName("input")[0].value = 10
+            currentsong.volume = .10
+
+        }
     })
-
-
-
-
 
 
 

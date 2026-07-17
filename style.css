@@ -166,3 +166,6 @@ body {
     bottom: 10px;
     cursor:pointer;
 }
+.volume input{
+    cursor:pointer;
+}
